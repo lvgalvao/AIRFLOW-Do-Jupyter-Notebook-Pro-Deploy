@@ -68,7 +68,7 @@ def load_completed():
 
 
 with DAG(
-    "transfer_data_dag_v8",
+    "transfer_data_dag_v9",
     default_args=default_args,
     schedule_interval="*/5 * * * *",
     catchup=False,
