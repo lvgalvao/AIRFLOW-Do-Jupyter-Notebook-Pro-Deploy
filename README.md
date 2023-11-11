@@ -75,9 +75,10 @@ sudo apt-get install libpq-dev
 Criar um ambiente virtual de Python
 
 ```bash
-python3 -m venv .venv
-
-source .venv/bin/activate
+pip install apache-airflow[postgres]
+pip install sqlalchemy
+pip install psycopg2-binary
+pip install apache-airflow-providers-postgres
 ```
 
 Configurar o Home do Airflow
@@ -255,4 +256,8 @@ with DAG(
 
 AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
 
-update
+### Adicionar novos Itens após o deploy
+
+INSERT INTO bronze_produtos (titulo, descricao, preco) VALUES 
+('Carrinho de Controle Remoto', 'Azul', 300.00),
+('Workshop', 'Workshop de deploy', -100.00);
