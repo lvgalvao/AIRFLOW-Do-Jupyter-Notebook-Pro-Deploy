@@ -261,3 +261,5 @@ AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
 INSERT INTO bronze_produtos (titulo, descricao, preco) VALUES 
 ('Carrinho de Controle Remoto', 'Azul', 300.00),
 ('Workshop', 'Workshop de deploy', -100.00);
+
+### Datadog
