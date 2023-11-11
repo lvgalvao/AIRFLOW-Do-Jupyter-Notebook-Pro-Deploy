@@ -14,14 +14,14 @@ default_args = {
 
 def transfer_data():
     # Utilizar o PostgresHook do Airflow para a conexão
-    hook = PostgresHook(postgres_conn_id="postgres-render")
+    hook = PostgresHook(postgres_conn_id="postgres_render")
     engine = hook.get_sqlalchemy_engine()
     Session = sessionmaker(bind=engine)
     session = Session()
     metadata = MetaData(bind=engine)
 
-    tabela_origem = Table("bronze_produto", metadata, autoload=True)
-    tabela_destino = Table("produto", metadata, autoload=True)
+    tabela_origem = Table("bronze_produtos", metadata, autoload=True)
+    tabela_destino = Table("produtos", metadata, autoload=True)
 
     # Filtrar dados: removendo registros com título Null e preço < 0
     dados = (
@@ -30,10 +30,10 @@ def transfer_data():
         .all()
     )
 
-    # Inserir dados filtrados na tabela de destino
+    # Inserir dados filtrados na tabela de destino, sem especificar o ID
     for dado in dados:
         insercao = tabela_destino.insert().values(
-            id=dado.id, titulo=dado.titulo, descricao=dado.descricao, preco=dado.preco
+            titulo=dado.titulo, descricao=dado.descricao, preco=dado.preco
         )
         session.execute(insercao)
 
@@ -42,7 +42,7 @@ def transfer_data():
 
 
 with DAG(
-    "transfer_data_dag_v2",
+    "transfer_data_dag_v8",
     default_args=default_args,
     schedule="@daily",
     catchup=False,
