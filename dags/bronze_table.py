@@ -44,7 +44,7 @@ def transfer_data():
 with DAG(
     "transfer_data_dag_v8",
     default_args=default_args,
-    schedule="@daily",
+    schedule_interval="*/5 * * * *",  # Executar a cada 5 minutos
     catchup=False,
 ) as dag:
     transfer_data_task = PythonOperator(
